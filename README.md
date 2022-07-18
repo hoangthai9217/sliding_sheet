@@ -1,94 +1,264 @@
-# sliding_sheet
+# Sliding Sheet
 
-Clone of https://pub.dev/packages/sliding_sheet to support flutter 3 and remove warning
-Warning: Operand of null-aware operation '?.' has type 'WidgetsBinding' which excludes null.
+[![pub package](https://img.shields.io/pub/v/sliding_sheet.svg)](https://pub.dartlang.org/packages/sliding_sheet)
+[![GitHub Stars](https://img.shields.io/github/stars/bxqm/sliding_sheet.svg?logo=github)](https://github.com/bxqm/sliding_sheet)
 
+A widget that can be dragged and scrolled in a single gesture and snapped to a list of extents.
 
-## Getting started
+<a href="https://github.com/bxqm/sliding_sheet/blob/master/example/lib/main.dart">
+  <img width="205px" alt="Example of a SlidingSheet" src="https://raw.githubusercontent.com/bxqm/sliding_sheet/master/assets/example.gif"/>
+</a>
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Click [here](https://github.com/bxqm/sliding_sheet/blob/master/example/lib/main.dart) to view the full example.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Installing
 
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
+Add it to your `pubspec.yaml` file:
+```yaml
+dependencies:
+  sliding_sheet: ^0.5.2
 ```
-cd existing_repo
-git remote add origin https://gitlab.gapo.com.vn/nonghoangthai/sliding_sheet.git
-git branch -M main
-git push -uf origin main
+Install packages from the command line
+```
+flutter packages get
 ```
 
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.gapo.com.vn/nonghoangthai/sliding_sheet/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+If you like this package, consider supporting it by giving it a star on [GitHub](https://github.com/bxqm/sliding_sheet) and a like on [pub.dev](https://pub.dev/packages/sliding_sheet) :heart:
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+There are two ways in which you can use a `SlidingSheet`: either as a permanent (or persistent) `Widget` in your
+widget tree or as a `BottomSheetDialog`. 
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+### As a Widget
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+This method can be used to show the `SlidingSheet` permanently (usually above your other widget) as shown in the example.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+```dart
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Colors.grey.shade200,
+    appBar: AppBar(
+      title: Text('Simple Example'),
+    ),
+    body: SlidingSheet(
+      elevation: 8,
+      cornerRadius: 16,
+      snapSpec: const SnapSpec(
+        // Enable snapping. This is true by default.
+        snap: true,
+        // Set custom snapping points.
+        snappings: [0.4, 0.7, 1.0],
+        // Define to what the snappings relate to. In this case, 
+        // the total available space that the sheet can expand to.
+        positioning: SnapPositioning.relativeToAvailableSpace,
+      ),
+      // The body widget will be displayed under the SlidingSheet
+      // and a parallax effect can be applied to it.
+      body: Center(
+        child: Text('This widget is below the SlidingSheet'),
+      ),
+      builder: (context, state) {
+        // This is the content of the sheet that will get
+        // scrolled, if the content is bigger than the available
+        // height of the sheet.
+        return Container(
+          height: 500,
+          child: Center(
+            child: Text('This is the content of the sheet'),
+          ),
+        );
+      },
+    ),
+  );
+}
+```
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+#### Result:
+<img width="205px" alt="Example" src="https://raw.githubusercontent.com/bxqm/sliding_sheet/master/assets/usage_example.gif" href/>
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+### As a BottomSheetDialog
 
-## License
-For open source projects, say how it is licensed.
+This method can be used to show a `SlidingSheet` as a `BottomSheetDialog` by calling the `showSlidingBottomSheet` function and returning and instance of `SlidingSheetDialog`.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+```dart
+void showAsBottomSheet() async {
+  final result = await showSlidingBottomSheet(
+    context,
+    builder: (context) {
+      return SlidingSheetDialog(
+        elevation: 8,
+        cornerRadius: 16,
+        snapSpec: const SnapSpec(
+          snap: true,
+          snappings: [0.4, 0.7, 1.0],
+          positioning: SnapPositioning.relativeToAvailableSpace,
+        ),
+        builder: (context, state) {
+          return Container(
+            height: 400,
+            child: Center(
+              child: Material(
+                child: InkWell(
+                  onTap: () => Navigator.pop(context, 'This is the result.'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      'This is the content of the sheet',
+                      style: Theme.of(context).textTheme.body1,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+  );
+
+  print(result); // This is the result.
+}
+```
+#### Result:
+<img width="205px" alt="Example" src="https://raw.githubusercontent.com/bxqm/sliding_sheet/master/assets/usage_example_bottom_sheet.gif"/>
+
+### Snapping
+
+A `SlidingSheet` can snap to multiple extents or to no at all. You can customize the snapping behavior by
+passing an instance of `SnapSpec` to the `SlidingSheet`.
+
+ Parameter | Description 
+--- | ---
+snap | If true, the `SlidingSheet` will snap to the provided `snappings`. If false, the `SlidingSheet` will slide from minExtent to maxExtent and then begin to scroll, if the content is bigger than the available height.
+snappings | The extents that the `SlidingSheet` will snap to, when the user ends a drag interaction. The minimum and maximum values will represent the bounds in which the `SlidingSheet` will slide until it reaches the maximum from which on it will scroll.
+positioning | Can be set to one of these three values: `SnapPositioning.relativeToAvailableSpace` - Positions the snaps relative to total available height that the `SlidingSheet` can expand to. All values must be between 0 and 1. E.g. a snap of `0.5` in a `Scaffold` without an `AppBar` would mean that the snap would be positioned at 40% of the screen height, irrespective of the height of the `SlidingSheet`. `SnapPositioning.relativeToSheetHeight` - Positions the snaps relative to the total height of the sheet. All values must be between 0 and 1. E.g. a snap of `0.5` and a total sheet size of 300 pixels would mean the snap would be positioned at a 150 pixel offset from the bottom. `SnapPositioning.pixelOffset` - Positions the snaps at a fixed pixel offset. `double.infinity` can be used to refer to the total available space without having to compute it yourself.
+onSnap | A callback function that gets invoked when the `SlidingSheet` snaps to an extent.
+
+<p float="left">
+  <img width="205px" alt="SnapPositioning.relativeToAvailableSpace with a snap of 0.5" src="https://raw.githubusercontent.com/bxqm/sliding_sheet/master/assets/example_snapping_relativeToAvailableSpace.png"/>
+  <img width="205px" alt="SnapPositioning.relativeToSheetHeight with a snap of 0.5" src="https://raw.githubusercontent.com/bxqm/sliding_sheet/master/assets/example_snapping_relativeToSheetHeight.png"/>
+  <img width="205px" alt="SnapPositioning.pixelOffset with a snap of 100" src="https://raw.githubusercontent.com/bxqm/sliding_sheet/master/assets/example_snapping_pixelOffset.png"/>
+</p>
+
+There are also some prebuild snaps you can facilitate to snap for example to headers or footers as shown in the example.
+
+ Snap | Description 
+--- | ---
+SnapSpec.headerFooterSnap | The snap extent that makes header and footer fully visible without account for vertical padding on the `SlidingSheet`.
+SnapSpec.headerSnap | The snap extent that makes the header fully visible without account for top padding on the `SlidingSheet`.
+SnapSpec.footerSnap | The snap extent that makes the footer fully visible without account for bottom padding on the `SlidingSheet`.
+SnapSpec.expanded | The snap extent that expands the whole `SlidingSheet`.
+
+### SheetController
+
+The `SheetController` can be used to change the state of a `SlidingSheet` manually, simply passing an instance of `SheetController` to a `SlidingSheet`. Note that the methods can only be used after the `SlidingSheet` has been rendered, however calling them before wont throw an exception.
+
+Note that you can also use the static `SheetController.of(context)` method to obtain an instance of the `SheetController` of the closest `SlidingSheet`. This also works if you didn't assign a `SheetController` explicitly on the `SlidingSheet`.
+
+ Method | Description 
+--- | ---
+`expand()` | Expands the `SlidingSheet` to the maximum extent.
+`collapse()` | Collapses the `SlidingSheet` to the minimum extent.
+`snapToExtent()` | Snaps the `SlidingSheet` to an arbitrary extent. The extent will be clamped to the minimum and maximum extent. If the scroll offset is > 0, the `SlidingSheet` will first scroll to the top and then slide to the extent.
+`scrollTo()` | Scrolls the `SlidingSheet` to the given offset. If the `SlidingSheet` is not yet at its maximum extent, it will first snap to the maximum extent and then scroll to the given offset.
+`rebuild()` | Calls all builders of the `SlidingSheet` to rebuild their children. This method can be used to reflect changes in the `SlidingSheet`s children without calling `setState(() {});` on the parent widget to improve performance.
+`show()` | Visually shows the `SlidingSheet` if it was previously hidden. Note that calling this method wont have an effect for `SlidingSheetDialogs`.
+`hide()` | Visually hides the `SlidingSheet` until you call `show()` again. Note that calling this method wont have an effect for `SlidingSheetDialogs`.
+
+### Headers and Footers
+
+Headers and footers are UI elements of a `SlidingSheet` that will be displayed at the top or bottom of a `SlidingSheet` respectively and will not get scrolled. The scrollable content will then live in between the header and the footer if specified. Delegating the touch events to the `SlidingSheet` is done for you. Example:
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Colors.grey.shade200,
+    appBar: AppBar(
+      title: Text('Simple Example'),
+    ),
+    body: Stack(
+      children: <Widget>[
+        SlidingSheet(
+          elevation: 8,
+          cornerRadius: 16,
+          snapSpec: const SnapSpec(
+            snap: true,
+            snappings: [112, 400, double.infinity],
+            positioning: SnapPositioning.pixelOffset,
+          ),
+          builder: (context, state) {
+            return Container(
+              height: 500,
+              child: Center(
+                child: Text(
+                  'This is the content of the sheet',
+                  style: Theme.of(context).textTheme.body1,
+                ),
+              ),
+            );
+          },
+          headerBuilder: (context, state) {
+            return Container(
+              height: 56,
+              width: double.infinity,
+              color: Colors.green,
+              alignment: Alignment.center,
+              child: Text(
+                'This is the header',
+                style: Theme.of(context).textTheme.body1.copyWith(color: Colors.white),
+              ),
+            );
+          },
+          footerBuilder: (context, state) {
+            return Container(
+              height: 56,
+              width: double.infinity,
+              color: Colors.yellow,
+              alignment: Alignment.center,
+              child: Text(
+                'This is the footer',
+                style: Theme.of(context).textTheme.body1.copyWith(color: Colors.black),
+              ),
+            );
+          },
+        ),
+      ],
+    ),
+  );
+}
+```
+#### Result:
+<img width="205px" alt="Simple header/footer example" src="https://raw.githubusercontent.com/bxqm/sliding_sheet/master/assets/example_header_footer.gif"/>
+
+### ListViews and Columns
+
+The children of a `SlidingSheet` are not allowed to have an inifinite (unbounded) height. Therefore when using a `ListView`, make sure to set `shrinkWrap` to `true` and `physics` to `NeverScrollableScrollPhysics`. Similarly when using a `Column` as a child of a `SlidingSheet`, make sure to set the `mainAxisSize` to `MainAxisSize.min`.
+
+### Material Effects
+
+In order to change the UI when the sheet gets interacted with, you can pass a callback to the `listener` field of a `SlidingSheet` that gets called with the current `SheetState` whenever the sheet slides or gets scrolled. You can then rebuild your UI accordingly. When using the `SlidingSheet` as a `bottomSheetDialog` you can also use `SheetController.rebuild()` to rebuild the sheet, if you want to change certain paramerters.
+
+For rebuilding individual children of a `SlidingSheet` (e.g. elevating the header when content gets scrolled under it), you can also use the `SheetListenerBuilder`:
+
+~~~dart
+return SheetListenerBuilder(
+  // buildWhen can be used to only rebuild the widget when needed.
+  buildWhen: (oldState, newState) => oldState.isAtTop != newState.isAtTop,
+  builder: (context, state) {
+    return AnimatedContainer(
+      elevation: !state.isAtTop ? elevation : 0.0,
+      duration: const Duration(milliseconds: 400),
+      child: child,
+    );
+  },
+);
+~~~
+
+The example for instance decreases the corner radius of the `SlidingSheet` as it gets dragged to the top and increases the headers top padding by the status bar height. Also, when content gets scrolled under the header it elevates.
+
+Because these are common Material behaviors, `SlidingSheet` supports those out of the box, which can be achieved by setting the `avoidStatusBar` field to `true`, `cornerRadiusOnFullscreen` to `0` and `liftOnScrollHeaderElevation` to the elevation.
+
+<img width="205px" alt="Example of Material Effects" src="https://raw.githubusercontent.com/bxqm/sliding_sheet/master/assets/example_reflecting_changes.gif"/>
